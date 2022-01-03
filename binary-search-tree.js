@@ -106,24 +106,49 @@ class BinarySearchTree {
     arr.push(node.val);
     if (node.left) this.dfsPreOrder(node.left, arr);
     if (node.right) this.dfsPreOrder(node.right, arr);
-    console.log(arr);
     return arr;
   }
 
   /** dfsInOrder(): Traverse the array using in-order DFS.
    * Return an array of visited nodes. */
 
-  dfsInOrder() {}
+  dfsInOrder(node = this.root, arr = []) {
+    if (!node) return arr;
+    if (node.left) this.dfsInOrder(node.left, arr);
+    arr.push(node.val);
+    if (node.right) this.dfsInOrder(node.right, arr);
+    return arr;
+  }
 
   /** dfsPostOrder(): Traverse the array using post-order DFS.
    * Return an array of visited nodes. */
 
-  dfsPostOrder() {}
+  dfsPostOrder(node = this.root, arr = []) {
+    if (!node) return arr;
+    if (node.left) this.dfsPostOrder(node.left, arr);
+    if (node.right) this.dfsPostOrder(node.right, arr);
+    arr.push(node.val);
+    return arr;
+  }
 
   /** bfs(): Traverse the array using BFS.
    * Return an array of visited nodes. */
 
-  bfs() {}
+  bfs() {
+    let arr = [];
+    let queue = [this.root];
+    while (queue.length) {
+      let current = queue.shift();
+      arr.push(current.val);
+      if (current.left) {
+        queue.push(current.left);
+      }
+      if (current.right) {
+        queue.push(current.right);
+      }
+    }
+    return arr;
+  }
 
   /** Further Study!
    * remove(val): Removes a node in the BST with the value val.
@@ -154,4 +179,4 @@ binarySearchTree
   .insert(1)
   .insert(5)
   .insert(50);
-binarySearchTree.dfsPreOrder();
+binarySearchTree.dfsInOrder();
