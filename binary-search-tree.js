@@ -43,7 +43,28 @@ class BinarySearchTree {
   /** insertRecursively(val): insert a new node into the BST with value val.
    * Returns the tree. Uses recursion. */
 
-  insertRecursively(val) {}
+  insertRecursively(val, node = this.root) {
+    if (!this.root) {
+      this.root = new Node(val);
+      return this;
+    }
+    if (val < node.val) {
+      if (node.left) {
+        this.insertRecursively(val, node.left);
+      } else {
+        node.left = new Node(val);
+        return this;
+      }
+    }
+    if (val > node.val) {
+      if (node.right) {
+        this.insertRecursively(val, node.right);
+      } else {
+        node.right = new Node(val);
+        return this;
+      }
+    }
+  }
 
   /** find(val): search the tree for a node with value val.
    * return the node, if found; else undefined. Uses iteration. */
@@ -64,12 +85,30 @@ class BinarySearchTree {
   /** findRecursively(val): search the tree for a node with value val.
    * return the node, if found; else undefined. Uses recursion. */
 
-  findRecursively(val) {}
+  findRecursively(val, node = this.root) {
+    if (!node) return;
+    if (node.val === val) {
+      return node;
+    }
+    if (val < node.val) {
+      return this.findRecursively(val, node.left);
+    }
+    if (val > node.val) {
+      return this.findRecursively(val, node.right);
+    }
+  }
 
   /** dfsPreOrder(): Traverse the array using pre-order DFS.
    * Return an array of visited nodes. */
 
-  dfsPreOrder() {}
+  dfsPreOrder(node = this.root, arr = []) {
+    if (!node) return arr;
+    arr.push(node.val);
+    if (node.left) this.dfsPreOrder(node.left, arr);
+    if (node.right) this.dfsPreOrder(node.right, arr);
+    console.log(arr);
+    return arr;
+  }
 
   /** dfsInOrder(): Traverse the array using in-order DFS.
    * Return an array of visited nodes. */
@@ -106,5 +145,13 @@ class BinarySearchTree {
 
 module.exports = BinarySearchTree;
 
-var binarySearchTree = new BinarySearchTree();
-binarySearchTree.insert(15).insert(20).insert(10).insert(12);
+let binarySearchTree = new BinarySearchTree();
+binarySearchTree
+  .insert(15)
+  .insert(20)
+  .insert(10)
+  .insert(12)
+  .insert(1)
+  .insert(5)
+  .insert(50);
+binarySearchTree.dfsPreOrder();
